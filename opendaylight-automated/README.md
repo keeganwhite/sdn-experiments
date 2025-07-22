@@ -12,18 +12,23 @@ The automation tool creates an SDN environment that provides basic L2 switching 
 
 While less efficient than a purpose-built L2 switch, this configuration provides a solid starting point for SDN experimentation with minimal manual configuration.
 
+## Dependencies
+
+- `docker compose`: can be easily installed from [here](https://docs.docker.com/compose/install/linux/#install-using-the-repository) via the "Install using the repository" method.
+
 ## Usage
 
 ### Running the Automation
 
-1. Start your OpenDaylight controller: `docker compose up -d`.
-2. Start Mininet with a topology: `sudo mn --controller=remote,ip=<controller-ip>,port=6653 --topo tree,2 --switch ovsk,protocols=OpenFlow13`
-3. Run the script using `./automate.sh` and enter your controller IP address.
-4. Test connectivity in the Mininet console: `mininet> pingall`
+1. Start your OpenDaylight controller: `sudo docker compose up -d`.
+2. Start Mininet with a 2-layer tree topology: `sudo mn --controller=remote,ip=<controller-ip>,port=6653 --topo tree,2 --switch ovsk,protocols=OpenFlow13`. The `<controller-ip>` can simply be set to `localhost`. This step will produce a `mininet>` console.
+3. Open a second terminal and run the script using `./automate.sh`. You will be prompted for your controller IP address but since we are using `localhost`, you can simply select the default (`127.0.0.1`).
+4. Test connectivity in the `mininet>` console: `pingall`.
 
 ### Managing flows
 
 To clear all configured flows: `./clear_flows.sh`.
+To exit the `mininet>` console: `exit`.
 
 ## How it Works
 
